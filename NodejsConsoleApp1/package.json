@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-console-app",
+  "version": "0.0.0",
+  "description": "Console App for blockchain academy",
+  "main": "app.js",
+  "author": {
+    "name": "Vitaliy Yemets"
+  },
+  "dependencies": {
+    "js-sha256": "^0.9.0",
+    "read": "^1.0.7"
+  }
+}
