@@ -1,44 +1,35 @@
-﻿let sha256 = require('js-sha256');
-let Block = require('./Block');
+﻿const sha256 = require('js-sha256');
+const Block = require('./Block');
 
 class Chain {
 
-    constructor(genesisBlock) {
+    constructor() {
 
         this.blocks = [];
-        this.addBlock(genesisBlock);
         this.mineRate = 3;
         this.difficulty = 4;
     }
+    //geting next block
+    mineAndAddBlock(transaction) {
+        let block = new Block();
+        block.addTransaction(transaction);
 
-    addBlock(block) {
-
-        if (this.blocks.length == 0) {
+        if (this.blocks.length === 0) {
             block.previousHash = "0000000000000000";
-            block.hash = this.generateHash(block);
-            block.date = new Date();
         }
+        else {
+            block.previousHash = this.getPreviousBlock().hash;
+        }
+
+        block.index = this.blocks.length;
+        block.difficulty = this.difficulty;
+        block.date = new Date();
+        block.hash = this.generateHash(block);
         if (this.blocks.length > 1) {
             this.addDynamicDifficulty();
         }
         this.validateBlockHash(block);
         this.blocks.push(block);
-    }
-    //geting next block
-    mineBlock(transactions) {
-        let block = new Block();
-
-        transactions.forEach(function (transaction) {
-            block.addTransaction(transaction);
-        })
-
-        let previousBlock = this.getPreviousBlock();
-        block.index = this.blocks.length;
-        block.previousHash = previousBlock.hash;
-        block.hash = this.generateHash(block);
-        block.difficulty = this.difficulty;
-        block.date = new Date();
-        return block;
     }
 
     generateHash(block) {
@@ -52,18 +43,16 @@ class Chain {
         return hash;
     }
 
-    isOrderValid(block) {
-        return this.getPreviousBlock().hash == block.previousHash;
-    }
     validateBlockHash(block) {
-        return block.hash == sha256(block.key);
+        return block.hash === sha256(block.key);
     }
-    validateFullChainHash() {
-        for (let i = 0; i < this.blocks.length; i++) {
-            if (!this.validateBlockHash(this.blocks[i]))
+    isValid() {
+        for (let i = 0; i < this.blocks.length - 1; i++) {
+            if (!this.validateBlockHash(this.blocks[i])
+                || this.blocks[i].hash === this.blocks[i+1].previousHash)
                 return false;
         }
-        return true;
+        return this.validateBlockHash(this.getPreviousBlock());
     }
     addDynamicDifficulty() {
         if (this.blocks[this.blocks.length - 2].date - this.getPreviousBlock().date < this.mineRate) {

@@ -1,7 +1,7 @@
 ﻿class Block {
 
     get key() {
-        return JSON.stringify(this.transactions) /*+ this.index + this.previousHash*/ + this.nonce;
+        return JSON.stringify(this.transactions) + this.index + this.previousHash + this.nonce + this.date + this.difficulty;
     }
 
     constructor() {
