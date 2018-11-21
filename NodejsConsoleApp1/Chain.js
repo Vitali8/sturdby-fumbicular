@@ -6,7 +6,7 @@ class Chain {
     constructor() {
 
         this.blocks = [];
-        this.mineRate = 3;
+        this.mineRate = 100;
         this.difficulty = 4;
     }
     //geting next block
@@ -56,7 +56,8 @@ class Chain {
     }
 
     addDynamicDifficulty() {
-        if (this.blocks[this.blocks.length - 2].date - this.getPreviousBlock().date < this.mineRate) {
+        let difference = this.getPreviousBlock().date - this.blocks[this.blocks.length - 2].date;
+        if (difference > this.mineRate) {
             this.difficulty++;
         }
         else {
