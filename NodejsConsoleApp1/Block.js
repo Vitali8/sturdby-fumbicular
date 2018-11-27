@@ -4,20 +4,17 @@
         return JSON.stringify(this.transactions) + this.index + this.previousHash + this.nonce + this.date + this.difficulty;
     }
 
-    constructor(transaction) {
+    constructor(index, timestamp, nonce, prevBlockHash, hash, transactions) {
 
-        this.index = 0;
-        this.previousHash = "";
-        this.hash = "";
-        this.nonce = 0;
+        this.index = index;
+        this.previousHash = prevBlockHash;
+        this.hash = hash;
+        this.nonce = nonce;
         this.difficulty = 0;
-        this.transactions = [];
-        this.addTransaction(transaction);
-        this.date = Date.prototype;
+        this.transactions = transactions;
+        this.date = timestamp;
     }
-    addTransaction(transaction) {
-        this.transactions.push(transaction);
-    }
+
 }
 
 module.exports = Block;

@@ -1,5 +1,6 @@
 ﻿const sha256 = require('js-sha256');
 const Block = require('./Block');
+const Network = require('./Network');
 
 class Chain {
 
@@ -8,9 +9,10 @@ class Chain {
         this.blocks = [];
         this.mineRate = 100;
         this.difficulty = 4;
+        this.pendingTransactions = [];
     }
     //geting next block
-    mineAndAddBlock(transaction) {
+    mineAndAddBlock() {
         let block = new Block(transaction);
 
         if (this.blocks.length === 0) {
@@ -28,6 +30,10 @@ class Chain {
             this.addDynamicDifficulty();
         }
         this.validateBlockHash(block);
+        for (let transaction in this.transactions) {
+            Network.changeState(transaction.from, 'Eth', -transaction.amount);
+            Network.changeState(transaction.to, 'Eth', transaction.amount);
+        }
         this.blocks.push(block);
     }
 

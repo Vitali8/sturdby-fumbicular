@@ -36,6 +36,9 @@
     <Compile Include="Chain.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Network.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Transaction.js">
       <SubType>Code</SubType>
     </Compile>
