@@ -34,7 +34,7 @@ input({ default: '6' }, function (someError, result, isDefault) {
         blockchain.makeNewTransaction(sender, 'Finn', Math.floor((Math.random() * 300) + 1), key);
         blockchain.mineAndAddBlock();
 
-        console.log('Signature valid? -', transaction.verifySignature(key.getPublic('hex'), sign));
+        //console.log('Signature valid? -', blockchain.blocks..verifySignature(key.getPublic('hex'), sign));
         console.log("=====Block has been Mined=====");
     }
 

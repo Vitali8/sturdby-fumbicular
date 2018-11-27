@@ -2,12 +2,12 @@
 const Chain = require('./Chain');
 
 class Network {
-    static worldState = [{
-        address: String.prototype,
-        key: String.prototype,
-        value: Number.prototype
-    }];
+    static get worldState() {
+        if (!this._worldState)
+            this._worldState = [];
 
+        return this._worldState;
+    }
     //constructor(blockChain) {
 
     //    this.chain = (Chain)blockChain;
@@ -25,10 +25,10 @@ class Network {
                 key,
                 value
             };
-            this.worldState.push(newRow);
+            this._worldState.push(newRow);
         }
         else
-            this.worldState[index] += value;
+            this._worldState[index] += value;
     }
 }
 
