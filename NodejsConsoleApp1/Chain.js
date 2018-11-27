@@ -1,6 +1,7 @@
 ﻿const sha256 = require('js-sha256');
 const Block = require('./Block');
 const Network = require('./Network');
+const Transaction = require('./Transaction');
 
 class Chain {
 
@@ -37,6 +38,19 @@ class Chain {
             Network.changeState(transaction.to, 'Eth', transaction.amount);
         }
         this.blocks.push(block);
+    }
+
+    makeNewTransaction(sender, recipient, amount, privateKey) {
+        this.pendingTransactions.push(new Transaction(
+            sender,
+            recipient,
+            amount)
+            .createSignature(privateKey)
+        );
+
+        console.log(`>>> Transaction: ${amount} from ${sender} to ${recipient}`);
+        //the number of the Block that this transaction will be added to
+        return this.blocks.length;
     }
 
     generateHash(block) {
