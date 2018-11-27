@@ -13,7 +13,9 @@ class Chain {
     }
     //geting next block
     mineAndAddBlock() {
-        let block = new Block(transaction);
+        let block = new Block(
+            this.pendingTransactions
+        );
 
         if (this.blocks.length === 0) {
             block.previousHash = "0000000000000000";
@@ -30,7 +32,7 @@ class Chain {
             this.addDynamicDifficulty();
         }
         this.validateBlockHash(block);
-        for (let transaction in this.transactions) {
+        for (let transaction in block.transactions) {
             Network.changeState(transaction.from, 'Eth', -transaction.amount);
             Network.changeState(transaction.to, 'Eth', transaction.amount);
         }
@@ -76,22 +78,14 @@ class Chain {
     }
 
     getBalance(user) {
-        let balance = 0
-        
-        for (let block in this.blocks) {
-            for (let transaction in block.transactions) {
+        let index = Network.worldState.findIndex(item => item.address === user);
+        let balance = 0;
+        if (index > -1) {
 
-                if (transaction.from === user) {
-                    balance -= transaction.amount
-                }
-
-                if (transaction.to === user) {
-                    balance += transaction.amount
-                }
-            }
+            balance = Network.worldState[index];
         }
 
-        return balance
+        return balance;
     }
 }
 
