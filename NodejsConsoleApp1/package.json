@@ -1,6 +1,6 @@
 {
   "name": "nodejs-console-app",
-  "version": "0.0.0",
+  "version": "0.3.1",
   "description": "Console App for blockchain academy",
   "main": "app.js",
   "author": {
@@ -9,7 +9,11 @@
   "dependencies": {
     "elliptic": "^6.4.1",
     "js-sha256": "^0.9.0",
+    "net": "^1.0.2",
     "peerjs": "^0.3.18",
-    "read": "^1.0.7"
+    "read": "^1.0.7",
+    "wrtc": "^0.3.2",
+    "ws": "^2.1.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }

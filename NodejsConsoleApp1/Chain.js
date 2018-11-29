@@ -52,6 +52,9 @@ class Chain {
         //the number of the Block that this transaction will be added to
         return this.blocks.length;
     }
+    makeNewTransaction(transaction) {
+
+    }
 
     generateHash(block) {
         let hash = sha256(block.key);
